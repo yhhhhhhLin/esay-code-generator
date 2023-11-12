@@ -1,4 +1,4 @@
-package ${packageName};
+package xyz.linyh.acm;
 
 import java.util.Scanner;
 

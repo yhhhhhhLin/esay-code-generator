@@ -23,7 +23,7 @@ public class DynamicGenerator {
     public static void doGenerator(String inputPath, String outputPath, AcmTemplateConfig acmTemplateConfig) throws IOException, TemplateException {
         Configuration configuration = new Configuration(Configuration.VERSION_2_3_31);
         configuration.setDefaultEncoding("utf-8");
-        configuration.setDirectoryForTemplateLoading(new File(inputPath));
+        configuration.setDirectoryForTemplateLoading(new File(inputPath).getParentFile());
 
 //        String currentPath = System.getProperty("user.dir");
 //        File file = new File(currentPath, "/easy-code-generator-basic/src/main/resources/template");
@@ -32,7 +32,7 @@ public class DynamicGenerator {
         String templateName = new File(inputPath).getName();
         Template template = configuration.getTemplate(templateName);
 //        template.process(acmTemplateConfig,new FileWriter("easy-code-generator-basic/src/main/java/xyz/linyh/generator/MainTemplate.java"));
-        template.process(acmTemplateConfig,new FileWriter(outputPath));
+        template.process(acmTemplateConfig,new FileWriter(outputPath+ File.separator+"MainTemplate.java"));
 
     }
 
@@ -45,7 +45,7 @@ public class DynamicGenerator {
             acmTemplateConfig.setLoop(false);
             acmTemplateConfig.setAuthorName("lin");
             acmTemplateConfig.setOutputText("总和为");
-            acmTemplateConfig.setPackageName(aClass.getPackageName());
+//            acmTemplateConfig.setPackageName(aClass.getPackageName());
 //            doGenerator(acmTemplateConfig);
         } catch (Exception e) {
             throw new RuntimeException(e);
