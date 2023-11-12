@@ -11,4 +11,5 @@ public class AcmTemplateConfig {
     private Boolean loop;
     private String authorName;
     private String outputText;
+    private String packageName;
 }

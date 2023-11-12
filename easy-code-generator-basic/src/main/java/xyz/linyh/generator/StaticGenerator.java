@@ -13,5 +13,9 @@ public class StaticGenerator {
         FileUtil.copy(inputPath,outputPath,false);
     }
 
+    public static void doGenerator(String inputPath, String outputPath){
+        copyFilesByHutool(inputPath, outputPath);
+    }
+
 
 }
