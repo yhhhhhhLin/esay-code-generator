@@ -1,0 +1,2 @@
+#!/bin/bash
+java -jar easy-code-generator-basic/target/easy-code-generator-basic-1.0-SNAPSHOT-jar-with-dependencies.jar "$@"
