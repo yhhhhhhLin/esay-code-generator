@@ -15,6 +15,14 @@ import java.io.IOException;
 @Data
 public class GenerateCommand implements Runnable{
 
+    /**
+     * echo 表示是否显示该选项的值
+     * interactive 表示是否需要用户输入该选项的值
+     * defaultValue 表示该选项的默认值
+     * required 表示该选项是否必须输入
+     * arity 表示该选项的数量
+     * description 表示该选项的描述
+     */
     @Option(names = {"-f","--loop"},description = {"是否循环生成"},arity = "0..1",defaultValue = "false",interactive = true,echo = true,required = true)
     private Boolean loop;
 

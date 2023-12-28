@@ -16,6 +16,7 @@ public class Main {
             args = CilUtils.addRequireArgs(args, GenerateCommand.class.getDeclaredFields());
         }
 
+//        采用命令模式运行(可以在里面统一管理和运行所有的命令（例如可以在里面进行历史命令的管理和可以有回退的操作）)
         commandExecutor.execute(args);
     }
 }
