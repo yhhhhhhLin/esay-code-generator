@@ -25,7 +25,7 @@ public class MainGenerator {
 
         String currentPath = System.getProperty("user.dir");
 //        生成静态文件
-        String inputPath = new File(currentPath, "easy-generator-demo-projects"+ File.separator+"acm-template").getAbsolutePath();
+        String inputPath = new File(currentPath, "easy-generator-demo-projects"+ File.separator+"acm-templates").getAbsolutePath();
         System.out.println(inputPath);
         String outputPath = currentPath;
         System.out.println(outputPath);
@@ -34,9 +34,9 @@ public class MainGenerator {
 
 
 //        获取这个动态文件要保存到的位置
-        String outputPath2 = new File(outputPath, "/acm-template/src/xyz/linyh/acm").toString();
+        String outputPath2 = new File(outputPath, "/acm-templates/src/xyz/linyh/acm").toString();
 //        获取模板文件的位置
-        String inputPath2 = currentPath+ "/easy-code-generator-basic/src/main/resources/template/AcmMainTemplate.java.ftl";
+        String inputPath2 = currentPath+ "/easy-code-generator-basic/src/main/resources/templates/AcmMainTemplate.java.ftl";
         DynamicGenerator.doGenerator(inputPath2,outputPath2,acmTemplateConfig);
     }
 }

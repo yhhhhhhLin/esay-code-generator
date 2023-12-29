@@ -21,11 +21,11 @@ public class MainTemplate {
     public static void doGenerator(TemplateConfig templateConfig) throws IOException, TemplateException {
 //        复制静态文件
         String parentPath = System.getProperty("user.dir");
-        File file = new File(parentPath + File.separator+"easy-generator-demo-projects"+File.separator+"acm-template");
+        File file = new File(parentPath + File.separator+"easy-generator-demo-projects"+File.separator+"acm-templates");
         generatorStatic(file.getAbsolutePath(),parentPath);
 
 //        获取模板路径
-        String templatePath = parentPath+"/easy-code-generator-basic/src/main/resources/template/AcmMainTemplate.java.ftl";
+        String templatePath = parentPath+"/easy-code-generator-basic/src/main/resources/templates/AcmMainTemplate.java.ftl";
         Configuration configuration = new Configuration(Configuration.VERSION_2_3_31);
         configuration.setDefaultEncoding("utf-8");
         System.out.println(new File(templatePath).getParentFile());
@@ -37,7 +37,7 @@ public class MainTemplate {
         Template template = configuration.getTemplate(name);
 
 //        输出到对应的位置
-        String outputPath = parentPath+"/acm-template/src/xyz/linyh/acm/MainTemplate.java";
+        String outputPath = parentPath+"/acm-templates/src/xyz/linyh/acm/MainTemplate.java";
         template.process(templateConfig,new FileWriter(outputPath));
 
 

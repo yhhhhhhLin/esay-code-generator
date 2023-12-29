@@ -12,7 +12,7 @@ public class ListCommand implements Runnable{
     @Override
     public void run() {
         String projectPath = System.getProperty("user.dir");
-        File file = new File(projectPath, "/easy-generator-demo-projects/acm-template");
+        File file = new File(projectPath, "/easy-generator-demo-projects/acm-templates");
         List<File> files = FileUtil.loopFiles(file.toString());
         for (File file1 : files) {
             System.out.println(file1.getAbsolutePath());
