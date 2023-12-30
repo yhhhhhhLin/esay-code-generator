@@ -8,7 +8,6 @@ import freemarker.template.TemplateException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 
 
 public class MainTemplate {
@@ -45,18 +44,6 @@ public class MainTemplate {
 
     }
 
-    public static void main(String[] args) {
-        TemplateConfig config = new TemplateConfig();
-        config.setLoop(false);
-        config.setAuthorName("linyhzz");
-        config.setOutputText("hello world::");
-        try {
-            doGenerator(config);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (TemplateException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
 }

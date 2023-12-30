@@ -1,15 +1,15 @@
-package xyz.linyh.generator2.executor;
+package templates.java.executor;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
-import xyz.linyh.generator2.command.ConfigCommand;
-import xyz.linyh.generator2.command.GenerateCommand;
-import xyz.linyh.generator2.command.ListCommand;
+import ${basePackage}.generator.command.file.ConfigCommand;
+import ${basePackage}.generator.command.file.GenerateCommand;
+import ${basePackage}.generator.command.file.ListCommand;
 
 /**
  * @author lin
  */
-@Command(name = "amc模板生成执行器",mixinStandardHelpOptions = true )
+@Command(name = "${description}",mixinStandardHelpOptions = true )
 public class CommandExecutor implements Runnable{
 
     private final CommandLine commandLine;

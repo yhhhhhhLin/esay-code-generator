@@ -1,4 +1,4 @@
-package xyz.linyh.maker.generator;
+package xyz.linyh.maker.generator.file;
 
 
 import cn.hutool.core.io.FileUtil;
@@ -22,7 +22,7 @@ public class DynamicFileGenerator {
      * @param model 需要动态传入的参数
      */
     public static void doGenerate(String inputPath,String outputPath,Object model) throws IOException {
-        Configuration configuration = new Configuration(Configuration.VERSION_2_3_23);
+        Configuration configuration = new Configuration(Configuration.VERSION_2_3_31);
         File parentFile = new File(inputPath).getParentFile();
 
 //        加载模板文件

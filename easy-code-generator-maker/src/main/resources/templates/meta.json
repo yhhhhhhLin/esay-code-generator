@@ -1,7 +1,7 @@
 {
   "name": "acm-template-pro-generator",
   "description": "ACM 示例模板生成器",
-  "basePackage": "xyz.linyh2",
+  "basePackage": "xyz.linyh",
   "version": "1.0",
   "author": "linyh",
   "createTime": "2023-12-29",
@@ -12,7 +12,7 @@
     "files": [
       {
         "inputPath": "src/main/resources/templates/AcmMainTemplate.java.ftl",
-        "outputPath": "src/xyz/linyh2/acm/MainTemplate.java",
+        "outputPath": "src/xyz/linyh/acm/MainTemplate.java",
         "type": "file",
         "generateType": "dynamic"
       },
@@ -43,14 +43,14 @@
         "fieldName": "author",
         "type": "String",
         "description": "作者注释",
-        "defaultValue": "\"linyh\"",
+        "defaultValue": "linyh",
         "abbr": "a"
       },
       {
         "fieldName": "outputText",
         "type": "String",
         "description": "输出信息",
-        "defaultValue": "\"sum =\" ",
+        "defaultValue": "sum = ",
         "abbr": "o"
       }
     ]

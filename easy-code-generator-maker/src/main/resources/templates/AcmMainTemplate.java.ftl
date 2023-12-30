@@ -3,7 +3,7 @@ package xyz.linyh.acm;
 import java.util.Scanner;
 
 /**
- * @author ${authorName}
+ * @author ${author}
  * ACM 输入模板（多数之和）
  */
 public class MainTemplate {

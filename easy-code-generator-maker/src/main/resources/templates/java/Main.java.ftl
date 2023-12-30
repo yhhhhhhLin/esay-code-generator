@@ -1,8 +1,8 @@
-package xyz.linyh.generator2;
+package ${basePackage}.generator;
 
-import xyz.linyh.cil.example.utils.CilUtils;
-import xyz.linyh.generator2.command.GenerateCommand;
-import xyz.linyh.generator2.executor.CommandExecutor;
+import ${basePackage}.generator.utils.CilUtils;
+import ${basePackage}.generator.command.file.GenerateCommand;
+import ${basePackage}.generator.executor.CommandExecutor;
 
 import java.util.Arrays;
 

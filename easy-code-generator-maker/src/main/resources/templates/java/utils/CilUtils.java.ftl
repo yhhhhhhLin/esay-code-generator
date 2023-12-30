@@ -1,4 +1,4 @@
-package xyz.linyh.cil.example.utils;
+package ${basePackage}.generator.utils;
 
 import picocli.CommandLine.Option;
 
@@ -51,6 +51,5 @@ public class CilUtils {
 
         return lists.toArray(new String[0]);
     }
-
 
 }

@@ -1,4 +1,4 @@
-package xyz.linyh.maker.generator;
+package xyz.linyh.maker.generator.file;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.resource.ResourceUtil;

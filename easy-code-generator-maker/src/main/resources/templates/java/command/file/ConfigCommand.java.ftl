@@ -1,7 +1,7 @@
-package xyz.linyh.generator2.command;
+package ${basePackage}.generator.command.file;
 
 import picocli.CommandLine.Command;
-import xyz.linyh.generator2.Template.TemplateConfig;
+import ${basePackage}.generator.model.DataModel;
 
 import java.lang.reflect.Field;
 
@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 public class ConfigCommand implements Runnable{
     @Override
     public void run() {
-        Class<TemplateConfig> clazz = TemplateConfig.class;
+        Class<DataModel> clazz = DataModel.class;
         Field[] fields = clazz.getDeclaredFields();
         int i = 0;
         for (Field field : fields) {

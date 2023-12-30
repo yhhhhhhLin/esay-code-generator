@@ -1,19 +1,12 @@
 package xyz.linyh.maker;
 
-import cn.hutool.core.io.resource.ResourceUtil;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import xyz.linyh.maker.constant.CommonConstant;
-import xyz.linyh.maker.generator.DynamicFileGenerator;
-import xyz.linyh.maker.generator.StaticFileGenerator;
-import xyz.linyh.maker.meta.DataModel;
 import xyz.linyh.maker.meta.Meta;
 import xyz.linyh.maker.meta.MetaManager;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
 
 /**
  * 将easy-generator-projects 下面的acm-project文件夹根据自己的需求创建一个保存到easy-code-generator下
@@ -50,37 +43,20 @@ public class MainGenerator {
 
     public static void main(String[] args) throws Exception {
 ////        获取配置文件数据
-//        Meta meta = MetaManager.getMeta();
-//        System.out.println(meta);
-//        String userDir = System.getProperty("user.dir");
-////        TODO 增加判断文件夹是否存在
-////        TODO 都应该是读取meta文件获取这些魔法值
-//        String inputPath = new File(userDir, "easy-code-generator-maker/src/main/resources/templates/java/model/DataModel.java.ftl").getAbsolutePath();
-//        Configuration configuration = new Configuration(Configuration.VERSION_2_3_23);
-//        configuration.setDirectoryForTemplateLoading(new File(inputPath).getParentFile());
-//        configuration.setDefaultEncoding("UTF-8");
-//        Template template = configuration.getTemplate(new File(inputPath).getName());
-//
-//        template.process(meta,new FileWriter(new File(userDir, "easy-code-generator-maker/src/main/java/xyz/linyh/maker/meta/DataModel2.java")));
-
         Meta meta = MetaManager.getMeta();
-//        获取配置的模板地址
-        Meta.FileConfig fileConfig = meta.getFileConfig();
-
+        System.out.println(meta);
         String userDir = System.getProperty("user.dir");
+//        TODO 增加判断文件夹是否存在
+//        TODO 都应该是读取meta文件获取这些魔法值
+        String inputPath = new File(userDir, "easy-code-generator-maker/src/main/resources/templates/java/model/DataModel.java.ftl").getAbsolutePath();
+        Configuration configuration = new Configuration(Configuration.VERSION_2_3_23);
+        configuration.setDirectoryForTemplateLoading(new File(inputPath).getParentFile());
+        configuration.setDefaultEncoding("UTF-8");
+        Template template = configuration.getTemplate(new File(inputPath).getName());
 
-        String inputRootPath = fileConfig.getInputRootPath();
-        for (Meta.FileConfig.Files file : fileConfig.getFiles()) {
-            String generateType = file.getGenerateType();
-            String templateInputPath = inputRootPath +"/"+ file.getInputPath();
-            System.out.println(templateInputPath);
-            if(CommonConstant.GENERATE_TYPE_STATIC.equals(generateType)){
-                StaticFileGenerator.doGenerate(templateInputPath,userDir+"/"+file.getOutputPath());
-            }else if(CommonConstant.GENERATE_TYPE_DYNAMIC.equals(generateType)){
-                DynamicFileGenerator.doGenerate(templateInputPath,userDir+"/"+file.getOutputPath(),meta);
-            }
+        template.process(meta,new FileWriter(new File(userDir, "easy-code-generator-maker/src/main/java/xyz/linyh/maker/meta/DataModel2.java")));
 
-        }
+
 
     }
 }
