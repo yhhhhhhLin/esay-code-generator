@@ -1,8 +1,9 @@
-package ${basePackage}.generator.Template;
+package ${basePackage}.generator.template;
 
 import cn.hutool.core.io.FileUtil;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import ${basePackage}.generator.model.DataModel;
 import freemarker.template.TemplateException;
 
 import java.io.File;

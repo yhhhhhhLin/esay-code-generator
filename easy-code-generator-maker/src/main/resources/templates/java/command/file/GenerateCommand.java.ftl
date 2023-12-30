@@ -6,7 +6,7 @@ import org.springframework.beans.BeanUtils;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import ${basePackage}.generator.Template.MainTemplate;
+import ${basePackage}.generator.template.MainTemplate;
 import ${basePackage}.generator.model.DataModel;
 
 import java.io.IOException;

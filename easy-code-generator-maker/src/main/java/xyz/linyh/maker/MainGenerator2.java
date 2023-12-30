@@ -51,6 +51,11 @@ public class MainGenerator2 {
         String executorOutPutPath = outPutJavaPath + basePackage + "/executor/CommandExecutor.java";
         DynamicFileGenerator.doGenerate(executorInputPath, executorOutPutPath, meta);
 
+//        生成template
+        String templateInputPath = inputRootResourcePath + "/templates/java/template/MainTemplate.java.ftl";
+        String templateOutPutPath = outPutJavaPath + basePackage + "/template/MainTemplate.java";
+        DynamicFileGenerator.doGenerate(templateInputPath, templateOutPutPath, meta);
+
 //        生成utils类
         String utilsInputPath = inputRootResourcePath + "/templates/java/utils/CilUtils.java.ftl";
         String utilsOutPutPath = outPutJavaPath + basePackage + "/utils/CilUtils.java";

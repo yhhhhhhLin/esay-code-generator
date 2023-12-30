@@ -1,4 +1,4 @@
-package templates.java.executor;
+package ${basePackage}.generator.executor;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
