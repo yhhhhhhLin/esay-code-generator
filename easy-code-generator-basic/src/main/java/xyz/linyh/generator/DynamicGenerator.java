@@ -1,5 +1,6 @@
 package xyz.linyh.generator;
 
+import cn.hutool.core.io.FileUtil;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -28,6 +29,10 @@ public class DynamicGenerator {
 //        获取模板文件的名称
         String templateName = new File(inputPath).getName();
         Template template = configuration.getTemplate(templateName);
+//        如果输出路径不存在，那么就创建
+        if (!new File(outputPath).exists()) {
+            FileUtil.touch(outputPath);
+        }
         template.process(acmTemplateConfig,new FileWriter(outputPath+ File.separator+"MainTemplate.java"));
 
     }

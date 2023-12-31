@@ -25,6 +25,7 @@ public class JarGenerator {
         String line = null;
         while((line=reader.readLine())!=null){
             // 逐行打印输出内容
+//            输出指定编码格式
             System.out.println(line);
         }
 

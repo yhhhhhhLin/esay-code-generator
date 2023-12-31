@@ -1,6 +1,7 @@
 package xyz.linyh.maker;
 
 import xyz.linyh.maker.generator.JarGenerator;
+import xyz.linyh.maker.generator.ScriptGenerator;
 import xyz.linyh.maker.generator.file.DynamicFileGenerator;
 import xyz.linyh.maker.meta.Meta;
 import xyz.linyh.maker.meta.MetaManager;
@@ -56,6 +57,15 @@ public class MainGenerator2 {
         String templateOutPutPath = outPutJavaPath + basePackage + "/template/MainTemplate.java";
         DynamicFileGenerator.doGenerate(templateInputPath, templateOutPutPath, meta);
 
+//        生成Generator
+        String dynamicGeneratorInputPath = inputRootResourcePath + "/templates/java/command/DynamicGenerator.java.ftl";
+        String dynamicGeneratorOutPutPath = outPutJavaPath + basePackage + "/command/DynamicGenerator.java";
+        DynamicFileGenerator.doGenerate(dynamicGeneratorInputPath, dynamicGeneratorOutPutPath, meta);
+
+        String staticGeneratorInputPath = inputRootResourcePath + "/templates/java/command/StaticGenerator.java.ftl";
+        String staticGeneratorOutPutPath = outPutJavaPath + basePackage + "/command/StaticGenerator.java";
+        DynamicFileGenerator.doGenerate(staticGeneratorInputPath, staticGeneratorOutPutPath, meta);
+
 //        生成utils类
         String utilsInputPath = inputRootResourcePath + "/templates/java/utils/CilUtils.java.ftl";
         String utilsOutPutPath = outPutJavaPath + basePackage + "/utils/CilUtils.java";
@@ -71,7 +81,14 @@ public class MainGenerator2 {
         String pomOutPutPath = outputRootPath +"/pom.xml";
         DynamicFileGenerator.doGenerate(pomInputPath, pomOutPutPath, meta);
 
+//        生成jar包
         JarGenerator.doGenerate( outputRootPath);
+
+//        生成脚本
+        String shellOutputFilePath = outputRootPath + File.separator + "generator";
+        String jarName = String.format("%s-%s-jar-with-dependencies.jar", meta.getName(), meta.getVersion());
+        String jarPath = "target/" + jarName;
+        ScriptGenerator.doGenerate(shellOutputFilePath, jarPath);
 
     }
 

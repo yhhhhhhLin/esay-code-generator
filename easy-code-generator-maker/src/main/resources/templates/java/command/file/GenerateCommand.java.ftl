@@ -32,7 +32,7 @@ public class GenerateCommand implements Runnable{
     @Override
     public void run() {
         DataModel dataModel = new DataModel();
-        BeanUtils.copyProperties(this,DataModel);
+        BeanUtils.copyProperties(this,dataModel);
         try {
             MainTemplate.doGenerator(dataModel);
         } catch (IOException e) {

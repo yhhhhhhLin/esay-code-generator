@@ -1,4 +1,4 @@
-package xyz.linyh.generator;
+package ${basePackage}.generator.command;
 
 import cn.hutool.core.io.FileUtil;
 

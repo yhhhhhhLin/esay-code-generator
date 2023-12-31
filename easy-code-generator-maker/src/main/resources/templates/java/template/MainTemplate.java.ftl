@@ -5,6 +5,8 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import ${basePackage}.generator.model.DataModel;
 import freemarker.template.TemplateException;
+import ${basePackage}.generator.command.DynamicGenerator;
+import ${basePackage}.generator.command.StaticGenerator;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -21,21 +23,23 @@ public class MainTemplate {
     public static void doGenerator(DataModel dataModel) throws IOException, TemplateException {
 //        复制静态文件
 //       遍历所有需要遍历的文件
-        String inputRootPath = "${fileConfig.inputRootPath}";
-        String outputRootPath = "${fileConfig.outputRootPath}";
+        String userDir = System.getProperty("user.dir")+File.separator;
+        String inputRootPath = "${fileConfig.inputRootPath}"+ File.separator;
+        String outputRootPath = userDir+"${fileConfig.outputRootPath}"+ File.separator;
 
-    String inputPath;
-    String outputPath;
+        String inputPath;
+        String outputPath;
     <#list fileConfig.files as fileInfo>
 
-    <#if fileInfo.type == "static">
+    <#if fileInfo.generateType == "static">
         inputPath = new File(inputRootPath, "${fileInfo.inputPath}").getAbsolutePath();
         outputPath = new File(outputRootPath, "${fileInfo.outputPath}").getAbsolutePath();
+        System.out.printf("%s \n %s",inputPath,outputPath);
         StaticGenerator.copyFilesByHutool(inputPath, outputPath);
     <#else >
         inputPath = new File(inputRootPath, "${fileInfo.inputPath}").getAbsolutePath();
         outputPath = new File(outputRootPath, "${fileInfo.outputPath}").getAbsolutePath();
-        DynamicGenerator.doGenerate(inputPath, outputPath, dataModel);
+        DynamicGenerator.doGenerator(inputPath, outputPath, dataModel);
     </#if>
     </#list>
     }
