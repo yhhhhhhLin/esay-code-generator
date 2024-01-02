@@ -23,6 +23,12 @@
         "generateType": "static"
       },
       {
+        "inputPath": "abc",
+        "outputPath": "abc",
+        "type": "file",
+        "generateType": "static"
+      },
+      {
         "inputPath": "README.md",
         "outputPath": "README.md",
         "type": "file",

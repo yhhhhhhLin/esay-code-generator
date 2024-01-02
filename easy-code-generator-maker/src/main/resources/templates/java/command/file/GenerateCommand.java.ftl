@@ -24,8 +24,8 @@ public class GenerateCommand implements Runnable{
      * description 表示该选项的描述
      */
 <#list modelConfig.models as modelInfo>
-    @Option(names = {<#if modelInfo.abbr??>"-${modelInfo.abbr}", </#if>"--${modelInfo.fieldName}"}, arity = "0..1", <#if modelInfo.description??>description = "${modelInfo.description}", </#if>interactive = true, echo = true)
-    private ${modelInfo.type} ${modelInfo.fieldName}<#if modelInfo.defaultValue??> = <#if modelInfo.type=='boolean'>${modelInfo.defaultValue?c} <#else>"${modelInfo.defaultValue}" </#if></#if>;
+    @Option(names = {<#if modelInfo.abbr??>"-${modelInfo.abbr}", </#if>"--${modelInfo.fieldName}"}, arity = "0..1",<#if modelInfo.defaultValue??>defaultValue = <#if modelInfo.type=='boolean'>"${modelInfo.defaultValue?c}" <#else>"${modelInfo.defaultValue}" </#if> , </#if> <#if modelInfo.description??>description = "${modelInfo.description}", </#if>interactive = true, echo = true)
+    private ${modelInfo.type} ${modelInfo.fieldName};
 
 </#list>
 

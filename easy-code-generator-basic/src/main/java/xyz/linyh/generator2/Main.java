@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         CommandExecutor commandExecutor = new CommandExecutor();
-        args = new String[]{"config"};
+        args = new String[]{"generate"};
 //        判断里面是否包含generator
         if(Arrays.asList(args).contains("generate")){
             args = CilUtils.addRequireArgs(args, GenerateCommand.class.getDeclaredFields());

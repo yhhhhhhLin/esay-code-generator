@@ -2,6 +2,8 @@
 # Compiled class file
 *.class
 
+generated
+
 # Log file
 *.log
 
