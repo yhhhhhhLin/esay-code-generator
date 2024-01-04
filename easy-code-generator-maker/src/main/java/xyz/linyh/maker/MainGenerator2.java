@@ -24,7 +24,6 @@ public class MainGenerator2 {
         String userDir = System.getProperty("user.dir");
         String basePackage = meta.getBasePackage().replace(".", File.separator) + "/generator";
         String outputRootPath = userDir + File.separator + meta.getFileConfig().getOutputRootPath()+File.separator+meta.getName();
-        String inputRootPath = meta.getFileConfig().getInputRootPath();
         String inputRootResourcePath = meta.getFileConfig().getInputRootPath() + "/src/main/resources";
         String outPutJavaPath = outputRootPath + "/src/main/java"+File.separator;
 

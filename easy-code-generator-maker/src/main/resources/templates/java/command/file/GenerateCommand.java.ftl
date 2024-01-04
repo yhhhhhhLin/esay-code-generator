@@ -11,6 +11,10 @@ import ${basePackage}.generator.model.DataModel;
 
 import java.io.IOException;
 
+/**
+* 执行generate指令的时候会执行到这个方法
+*@author ${author}
+*/
 @Command(name = "${description}",mixinStandardHelpOptions = true)
 @Data
 public class GenerateCommand implements Runnable{

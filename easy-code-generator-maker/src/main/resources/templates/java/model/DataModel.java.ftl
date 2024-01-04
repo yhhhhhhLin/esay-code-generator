@@ -2,6 +2,10 @@ package ${basePackage}.generator.model;
 
 import lombok.Data;
 
+/**
+* 生成需要的实体类
+* @author ${author}
+*/
 @Data
 public class DataModel {
 

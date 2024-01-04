@@ -12,7 +12,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
+/**
+* 主生成类，需要生成的所有文件
+* @author ${author}
+*/
 public class MainTemplate {
 
 

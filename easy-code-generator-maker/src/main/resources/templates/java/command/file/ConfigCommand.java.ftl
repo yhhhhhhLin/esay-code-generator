@@ -5,6 +5,10 @@ import ${basePackage}.generator.model.DataModel;
 
 import java.lang.reflect.Field;
 
+/**
+* 执行config指令的时候会执行到这个方法
+*@author ${author}
+*/
 @Command(name = "需要传入的配置",mixinStandardHelpOptions = true)
 public class ConfigCommand implements Runnable{
     @Override
