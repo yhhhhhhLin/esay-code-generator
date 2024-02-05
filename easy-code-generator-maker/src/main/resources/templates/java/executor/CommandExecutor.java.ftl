@@ -7,7 +7,7 @@ import ${basePackage}.generator.command.file.GenerateCommand;
 import ${basePackage}.generator.command.file.ListCommand;
 
 /**
- * @author lin
+ * @author ${author}
  */
 @Command(name = "${description}",mixinStandardHelpOptions = true )
 public class CommandExecutor implements Runnable{

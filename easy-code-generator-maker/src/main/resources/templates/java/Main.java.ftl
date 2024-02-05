@@ -6,6 +6,10 @@ import ${basePackage}.generator.executor.CommandExecutor;
 
 import java.util.Arrays;
 
+/**
+* @author ${author}
+* Main方法
+*/
 public class Main {
     public static void main(String[] args) {
         CommandExecutor commandExecutor = new CommandExecutor();

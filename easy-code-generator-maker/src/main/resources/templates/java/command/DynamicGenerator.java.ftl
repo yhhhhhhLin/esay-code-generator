@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 /**
  * 用来生成动态文件的
+ *@author ${author}
  */
 public class DynamicGenerator {
 
