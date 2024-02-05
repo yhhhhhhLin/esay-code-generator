@@ -1,5 +1,6 @@
 package xyz.linyh.maker;
 
+import cn.hutool.core.util.StrUtil;
 import xyz.linyh.maker.generator.JarGenerator;
 import xyz.linyh.maker.generator.ScriptGenerator;
 import xyz.linyh.maker.generator.file.DynamicFileGenerator;
