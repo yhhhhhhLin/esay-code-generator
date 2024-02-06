@@ -10,10 +10,11 @@ import xyz.linyh.maker.meta.MetaManager;
 import java.io.File;
 import java.io.IOException;
 
-public class MainGenerator2 extends MainTemplate{
+public class MainGenerator2 extends MainTemplate {
 
     /**
      * 如果想要修改某一步的步骤，直接重写就好了
+     *
      * @param outputRootPath
      * @param meta
      * @throws IOException
