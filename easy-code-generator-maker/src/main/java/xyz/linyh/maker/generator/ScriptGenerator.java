@@ -17,7 +17,7 @@ public class ScriptGenerator {
      * 生成可执行脚本文件
      *
      * @param outputPath 输出路径
-     * @param jarPath jar文件路径
+     * @param jarPath    jar文件路径
      * @throws IOException
      */
     public static void doGenerate(String outputPath, String jarPath) throws IOException {

@@ -2,6 +2,7 @@ package xyz.linyh.maker.cil.pattern;
 
 /**
  * 统一调度
+ *
  * @author lin
  */
 public class RemoteControl {
@@ -10,16 +11,16 @@ public class RemoteControl {
 
     private Integer num = 0;
 
-    public void setCommand(Command command){
+    public void setCommand(Command command) {
         this.command = command;
     }
 
-    public void execute(){
+    public void execute() {
         command.execute();
         num++;
     }
 
-    public void getNum(){
-        System.out.println("执行了"+num+"次");
+    public void getNum() {
+        System.out.println("执行了" + num + "次");
     }
 }

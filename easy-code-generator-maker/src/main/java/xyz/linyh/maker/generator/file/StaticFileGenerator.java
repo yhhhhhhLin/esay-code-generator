@@ -10,14 +10,15 @@ public class StaticFileGenerator {
 
     /**
      * 生成静态文件
-     * @param inputPath 静态文件原始位置
+     *
+     * @param inputPath  静态文件原始位置
      * @param outputPath 要生成后的路径
      */
-    public static void doGenerate(String inputPath,String outputPath) {
-        if (!FileUtil.exist(outputPath)){
+    public static void doGenerate(String inputPath, String outputPath) {
+        if (!FileUtil.exist(outputPath)) {
             FileUtil.mkdir(outputPath);
         }
-        FileUtil.copy(inputPath, outputPath,false);
+        FileUtil.copy(inputPath, outputPath, false);
     }
 
     public static void main(String[] args) {
