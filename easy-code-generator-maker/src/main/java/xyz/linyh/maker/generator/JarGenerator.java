@@ -23,7 +23,7 @@ public class JarGenerator {
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
         String line = null;
-        while((line=reader.readLine())!=null){
+        while ((line = reader.readLine()) != null) {
             // 逐行打印输出内容
 //            输出指定编码格式
             System.out.println(line);
@@ -32,10 +32,10 @@ public class JarGenerator {
         int code = process.waitFor();
         if (code != 0) {
             // 如果进程返回码不为0，表示执行失败
-            System.out.printf("执行命令失败：%s%n",code);
-        }else{
+            System.out.printf("执行命令失败：%s%n", code);
+        } else {
             // 如果进程返回码为0，表示执行成功
-            System.out.printf("执行命令成功：%s%n",code);
+            System.out.printf("执行命令成功：%s%n", code);
         }
     }
 
