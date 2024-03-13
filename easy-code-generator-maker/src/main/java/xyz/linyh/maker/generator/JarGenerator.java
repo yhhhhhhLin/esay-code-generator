@@ -1,5 +1,7 @@
 package xyz.linyh.maker.generator;
 
+import jdk.jfr.FlightRecorder;
+
 import java.io.*;
 
 public class JarGenerator {
@@ -21,7 +23,7 @@ public class JarGenerator {
         InputStream inputStream = process.getInputStream();
         // 创建BufferedReader来读取输入流的内容
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
+        // 读取一行内容
         String line = null;
         while ((line = reader.readLine()) != null) {
             // 逐行打印输出内容
