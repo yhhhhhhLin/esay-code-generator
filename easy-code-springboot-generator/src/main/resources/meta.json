@@ -1,0 +1,90 @@
+{
+  "name": "acm-template-pro-generator",
+  "description": "springboot 模板文件生成",
+  "basePackage": "shop.linyh",
+  "version": "1.0",
+  "author": "linyh",
+  "createTime": "2024-03-13",
+  "fileConfig": {
+    "inputRootPath": "F:\\AllIdeaProject\\esay-code-generator\\easy-generator-demo-projects\\yhapi-backed",
+    "outputRootPath": "springboot-generated",
+    "type": "dir",
+    "files": [
+      {
+        "inputPath": "src/main/resources/templates/AcmMainTemplate.java.ftl",
+        "outputPath": "src/xyz/linyh/acm/MainTemplate.java",
+        "type": "file",
+        "generateType": "dynamic"
+      },
+      {
+        "inputPath": "src/main/resources/templates/AcmMainTemplate.java.ftl",
+        "outputPath": "src/xyz/linyh/acm/MainTemplate.java",
+        "type": "group",
+        "condition": "needGit",
+        "files": [
+          {
+            "inputPath": ".gitignore",
+            "outputPath": ".gitignore",
+            "generateType": "static"
+          },
+          {
+            "inputPath": "README.md",
+            "outputPath": "README.md",
+            "type": "file",
+            "generateType": "static"
+          }
+        ]
+      },
+      {
+        "inputPath": ".gitignore",
+        "outputPath": ".gitignore",
+        "type": "file",
+        "condition": "needGit",
+        "generateType": "static"
+      },
+      {
+        "inputPath": "abc",
+        "outputPath": "abc",
+        "type": "file",
+        "generateType": "static"
+      },
+      {
+        "inputPath": "README.md",
+        "outputPath": "README.md",
+        "type": "file",
+        "generateType": "static"
+      }
+    ]
+  },
+  "modelConfig": {
+    "models": [
+      {
+        "fileName": "needGit",
+        "type": "boolean",
+        "description": "是否生成 .gitignore 文件",
+        "default": true
+      },
+      {
+        "fieldName": "loop",
+        "type": "boolean",
+        "description": "是否生成循环",
+        "defaultValue": false,
+        "abbr": "f"
+      },
+      {
+        "fieldName": "author",
+        "type": "String",
+        "description": "作者注释",
+        "defaultValue": "linyh",
+        "abbr": "a"
+      },
+      {
+        "fieldName": "outputText",
+        "type": "String",
+        "description": "输出信息",
+        "defaultValue": "sum = ",
+        "abbr": "o"
+      }
+    ]
+  }
+}

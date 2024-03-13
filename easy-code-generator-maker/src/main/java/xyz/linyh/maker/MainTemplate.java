@@ -5,9 +5,9 @@ import xyz.linyh.maker.generator.ScriptGenerator;
 import xyz.linyh.maker.generator.file.DynamicFileGenerator;
 import xyz.linyh.maker.meta.Meta;
 import xyz.linyh.maker.meta.MetaManager;
-
 import java.io.File;
 import java.io.IOException;
+
 
 /**
  * 生成器的模板方法，可以按照doGenerator的方法进行生成，子类继承后，如果想要修改某一步的过程，就可以重写里面的方法

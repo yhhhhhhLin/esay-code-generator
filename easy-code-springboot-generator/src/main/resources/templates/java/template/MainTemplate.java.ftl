@@ -33,7 +33,7 @@ public class MainTemplate {
         String inputPath;
         String outputPath;
     <#list fileConfig.files as fileInfo>
-        判断他如果有这个属性，那么需要判断对应的参数是否存在，如果存在，那么就需要生成
+<#--        判断他如果存在condition字段，如果存在并且condition为false，那么直接遍历下一个list，其他情况就需要判断是什么类型的文件，如果是group类型的，那么需要写一个while循环所有files-->
     <#if fileInfo.condition??>
         if(dataModel.#{fileInfo.condition}){
         <#if fileInfo.generateType == "static">

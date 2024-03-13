@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "meta": {
+    "name": "springboot-init-generator",
+    "description": "springboot-init-generator"
+  },
+  "originProjectPath": "../../easy-generator-demo-projects"
+}

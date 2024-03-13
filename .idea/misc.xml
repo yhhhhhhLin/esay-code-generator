@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/easy-code-generator-basic/pom.xml" />
         <option value="$PROJECT_DIR$/easy-code-generator-maker/pom.xml" />
         <option value="$PROJECT_DIR$/stream-example/pom.xml" />
+        <option value="$PROJECT_DIR$/easy-code-springboot-generator/pom.xml" />
       </list>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />
