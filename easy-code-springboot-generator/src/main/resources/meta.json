@@ -25,6 +25,7 @@
           {
             "inputPath": ".gitignore",
             "outputPath": ".gitignore",
+            "type": "file",
             "generateType": "static"
           },
           {
@@ -84,6 +85,28 @@
         "description": "输出信息",
         "defaultValue": "sum = ",
         "abbr": "o"
+      },
+      {
+        "condition": "needGit",
+        "fieldName": "groupTest",
+        "type": "group",
+        "description": "要传入组的集合",
+        "models": [
+          {
+            "fieldName": "name",
+            "type": "String",
+            "description": "名字",
+            "defaultValue": "linyh",
+            "abbr": "n"
+          },
+          {
+            "fieldName": "age",
+            "type": "Integer",
+            "description": "年龄",
+            "defaultValue": 18,
+             "abbr": "a"
+          }
+        ]
       }
     ]
   }

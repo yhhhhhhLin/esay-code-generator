@@ -1,8 +1,8 @@
-package shop.linyh.meta;
+package shop.linyh.templateGen.meta;
 
 import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.json.JSONUtil;
-import shop.linyh.model.Meta;
+import shop.linyh.templateGen.model.Meta;
 
 public class MetaManager {
 

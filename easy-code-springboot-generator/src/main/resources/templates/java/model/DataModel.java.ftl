@@ -17,5 +17,7 @@ public class DataModel {
         */
     </#if>
     public ${modelInfo.type} ${modelInfo.fieldName} <#if modelInfo.defaultValue??> = <#if modelInfo.type=='boolean'>${modelInfo.defaultValue?c} <#else>"${modelInfo.defaultValue}"</#if></#if>;
+
+
 </#list>
 }
