@@ -1,8 +1,6 @@
-package shop.linyh.model;
+package shop.linyh.templateGen.model;
 
 import lombok.Getter;
-
-import javax.swing.*;
 
 /**
  * 文件类型枚举

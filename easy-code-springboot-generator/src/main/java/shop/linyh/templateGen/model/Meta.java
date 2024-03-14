@@ -1,8 +1,10 @@
-package shop.linyh.model;
+package shop.linyh.templateGen.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -42,16 +44,24 @@ public class Meta {
     @NoArgsConstructor
     @Data
     public static class ModelsConfig {
-        private List<Models> models;
+        private List<Models> models = new ArrayList<>();
 
         @NoArgsConstructor
         @Data
+        @AllArgsConstructor
         public static class Models {
             private String fieldName;
             private String type;
             private String description;
             private Object defaultValue;
             private String abbr;
+            private String condition;
+            private List<Models> models;
+
+            public Models(String fieldName, String type) {
+                this.fieldName = fieldName;
+                this.type = type;
+            }
         }
     }
 }

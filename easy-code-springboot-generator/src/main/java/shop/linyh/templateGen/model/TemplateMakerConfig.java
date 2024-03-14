@@ -1,4 +1,4 @@
-package shop.linyh.model;
+package shop.linyh.templateGen.model;
 
 public class TemplateMakerConfig {
 
