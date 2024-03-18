@@ -1,26 +1,86 @@
 package shop.linyh.templateGen.marker.template;
-import shop.linyh.templateGen.model.Meta.ModelsConfig.Models;
-import shop.linyh.templateGen.model.Meta.FileConfig.Files;
-import java.util.ArrayList;
-import shop.linyh.templateGen.model.Meta.FileConfig;
-import shop.linyh.templateGen.model.Meta.ModelsConfig;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
+import shop.linyh.templateGen.model.FileTypeEnum;
 import shop.linyh.templateGen.model.Meta;
+import shop.linyh.templateGen.model.Meta.FileConfig;
+import shop.linyh.templateGen.model.Meta.ModelsConfig;
+import shop.linyh.templateGen.model.Meta.ModelsConfig.Models;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 用于生成模板的工具类，将原先项目挖空后生成对应的ftl文件或json文件等等
  */
 public class TemplateMaker {
 
-    public static void genTemplateFile(Long pathId) {
+//    public static void genTemplateFile(Long pathId) {
+//
+//        /**
+//         * 可以复制单个ftl文件和挖一个空
+//         */
+//        String inputPath = "src" + File.separator + "xyz" + File.separator + "linyh" + File.separator + "acm" + File.separator + "MainTemplate.java";
+//
+//        String userWorkPath = System.getProperty("user.dir");
+//        String projectPath = userWorkPath + File.separator + "easy-generator-demo-projects" + File.separator + "acm-template" + File.separator;
+////        生成的模板文件先保存到temp目录下，如果每一次新增的id相同的话，那么就需要把原先的模板先复制过去，然后生成新的ftl文件
+//        String outputRootPath = userWorkPath + File.separator + ".temp" + File.separator + pathId + File.separator + "acm-template" + File.separator;
+//
+//        String tempDir = userWorkPath + File.separator + ".temp" + File.separator + pathId;
+//
+//        if (!FileUtil.exist(tempDir)) {
+//            FileUtil.mkdir(tempDir);
+////            复制模板总框架过来
+//            FileUtil.copy(projectPath, tempDir, true);
+//        }
+//
+////        获取要复制的模板源文件
+//        String filePath = projectPath + inputPath;
+//        String fileOutputName = outputRootPath + inputPath + ".ftl";
+//
+//        String oldStrContent = FileUtil.readUtf8String(filePath);
+//        String searchStr = "Sum: ";
+//        String fieldName = "outputText";
+//        String format = String.format("${%s}", fieldName);
+//        String newContent = StrUtil.replace(oldStrContent, searchStr, format);
+//        FileUtil.writeUtf8String(newContent, fileOutputName);
+//
+////        创建meta.json文件
+//        Meta meta = new Meta();
+//        meta.setName("acm模板");
+//        meta.setDescription("模板生成器");
+//        FileConfig fileConfig = new FileConfig();
+//        fileConfig.setInputRootPath(projectPath + inputPath);
+//        fileConfig.setOutputRootPath(outputRootPath + fileOutputName);
+//
+//        meta.setFileConfig(fileConfig);
+//        ModelsConfig modelsConfig = new ModelsConfig();
+//        ArrayList<Models> models = new ArrayList<>();
+//        models.add(new Models("acm", "acm"));
+//        modelsConfig.setModels(models);
+//        meta.setModelConfig(modelsConfig);
+//        System.out.println(JSONUtil.toJsonPrettyStr(meta));
+//        FileUtil.writeUtf8String(JSONUtil.toJsonPrettyStr(meta), outputRootPath + File.separator+"src"+File.separator+"resource"+File.separator+"meta.json");
+//
+//
+//    }
 
-        String inputPath = "src" + File.separator + "xyz" + File.separator + "linyh" + File.separator + "acm" + File.separator + "MainTemplate.java";
+
+    /**
+     * 可以对同一个ftl文件进行多次挖空，还可以追加meta里面的配置信息
+     *
+     * @param pathId
+     */
+    public static void genTemplateFiles(Long pathId, String searchStr, String fieldName, String inputResource) {
+
+
+//        创建对应的files
 
         String userWorkPath = System.getProperty("user.dir");
         String projectPath = userWorkPath + File.separator + "easy-generator-demo-projects" + File.separator + "acm-template" + File.separator;
@@ -29,45 +89,114 @@ public class TemplateMaker {
 
         String tempDir = userWorkPath + File.separator + ".temp" + File.separator + pathId;
 
+//        如果原先的已经存在了
         if (!FileUtil.exist(tempDir)) {
             FileUtil.mkdir(tempDir);
 //            复制模板总框架过来
             FileUtil.copy(projectPath, tempDir, true);
         }
 
-//        获取要复制的模板源文件
-        String filePath = projectPath + inputPath;
-        String fileOutputName = outputRootPath + inputPath + ".ftl";
+//        获取要复制的模板源文件，追加： 判断对应的ftl文件是否存在，如果存在，那么就对ftl文件进行继续挖空
+        String filePath = projectPath + inputResource;
+        String fileOutputName = outputRootPath + inputResource + ".ftl";
 
-        String oldStrContent = FileUtil.readUtf8String(filePath);
-        String searchStr = "Sum: ";
-        String fieldName = "outputText";
-        String format = String.format("${%s}", fieldName);
-        String newContent = StrUtil.replace(oldStrContent, searchStr, format);
+//        判断ftl文件是否存在
+        String newContent;
+        if (FileUtil.exist(fileOutputName)) {
+//            进行继续挖空
+            String oldContent = FileUtil.readUtf8String(fileOutputName);
+            String format = String.format("${%s}", fieldName);
+            newContent = StrUtil.replace(oldContent, searchStr, format);
+        } else {
+//            直接生成新的
+            String oldStrContent = FileUtil.readUtf8String(filePath);
+            String format = String.format("${%s}", fieldName);
+            newContent = StrUtil.replace(oldStrContent, searchStr, format);
+        }
+//        创建对应的文件ftl文件
         FileUtil.writeUtf8String(newContent, fileOutputName);
 
-//        创建meta.json文件
+//        判断meta是否存在
         Meta meta = new Meta();
-        meta.setName("acm模板");
-        meta.setDescription("模板生成器");
-        FileConfig fileConfig = new FileConfig();
-        fileConfig.setInputRootPath(projectPath+inputPath);
-        fileConfig.setOutputRootPath(outputRootPath+fileOutputName);
 
-        meta.setFileConfig(fileConfig);
-        ModelsConfig modelsConfig = new ModelsConfig();
-        modelsConfig.setModels(new ArrayList<Models>());
-
-        meta.setModelConfig(modelsConfig);
-
-
+        FileConfig.Files addFile = new FileConfig.Files(inputResource + "ftl", inputResource, FileTypeEnum.FILE.getValue(), "dynamic", null, null);
+        if (FileUtil.exist(outputRootPath + "src" + File.separator + "resource" + File.separator + "meta.json")) {
+//            进行追加操作
+            String metaStr = FileUtil.readUtf8String(outputRootPath + "src" + File.separator + "resource" + File.separator + "meta.json");
+            meta = JSONUtil.toBean(metaStr, Meta.class);
+            FileConfig fileConfig = meta.getFileConfig();
+            ModelsConfig modelConfig = meta.getModelConfig();
+            List<FileConfig.Files> files = fileConfig.getFiles();
+            List<Models> oldModels = modelConfig.getModels();
+            meta.getFileConfig().getFiles().add(addFile);
+//            todo
+            oldModels.add(new Models("acm2", "acm2"));
+//            进行去重操作
+            meta.getModelConfig().setModels(distinctModels(oldModels));
+            meta.getFileConfig().setFiles(distinctFiles(files));
+        } else {
+//        创建meta.json文件
+            meta.setName("acm模板");
+            meta.setDescription("模板生成器");
+            FileConfig fileConfig = new FileConfig();
+            fileConfig.setInputRootPath(projectPath + inputResource);
+            fileConfig.setOutputRootPath(outputRootPath + fileOutputName);
+            meta.setFileConfig(fileConfig);
+            ArrayList<FileConfig.Files> files = new ArrayList<>();
+            files.add(addFile);
+            meta.getFileConfig().setFiles(files);
+            ModelsConfig modelsConfig = new ModelsConfig();
+            ArrayList<Models> models = new ArrayList<>();
+            models.add(new Models("acm", "acm"));
+            modelsConfig.setModels(models);
+            meta.setModelConfig(modelsConfig);
+        }
+        FileUtil.writeUtf8String(JSONUtil.toJsonPrettyStr(meta), outputRootPath + File.separator + "src" + File.separator + "resource" + File.separator + "meta.json");
 
 
     }
 
+    /**
+     * 对里面的根据inputPath去重
+     *
+     * @param oldFiles
+     * @return
+     */
+    public static List<FileConfig.Files> distinctFiles(List<FileConfig.Files> oldFiles) {
+        return new ArrayList<FileConfig.Files>(oldFiles.stream()
+                .collect(
+                        Collectors.toMap(FileConfig.Files::getInputPath,
+                                o -> o,
+                                (oldValue, newValue) -> newValue))
+                .values());
+    }
+
+    /**
+     * 对里面的根据fieldName去重
+     *
+     * @param
+     * @return
+     */
+    public static List<Models> distinctModels(List<Models> oldModels) {
+        return new ArrayList<Models>(oldModels.stream().collect(Collectors.toMap(Models::getFieldName, o -> o, (oldValue, newValue) -> newValue)).values());
+    }
+
+
+//    public static void main(String[] args) {
+//        long tempPathId = IdUtil.getSnowflakeNextId();
+//        genTemplateFile(tempPathId);
+//
+//    }
+
+    /**
+     * 设置成为可以追加新的挖空模板文件
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         long tempPathId = IdUtil.getSnowflakeNextId();
-        genTemplateFile(tempPathId);
+        String inputPath = "src" + File.separator + "xyz" + File.separator + "linyh" + File.separator + "acm" + File.separator + "MainTemplate.java";
+        genTemplateFiles(1L, "Sum: ", "outputText", inputPath,null);
 
     }
 }
