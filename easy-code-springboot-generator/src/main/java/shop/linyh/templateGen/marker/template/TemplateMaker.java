@@ -1,7 +1,6 @@
 package shop.linyh.templateGen.marker.template;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import shop.linyh.templateGen.model.FileTypeEnum;
@@ -12,6 +11,7 @@ import shop.linyh.templateGen.model.Meta.ModelsConfig.Models;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,9 +79,7 @@ public class TemplateMaker {
      */
     public static void genTemplateFiles(Long pathId, String searchStr, String fieldName, String inputResource) {
 
-
 //        创建对应的files
-
         String userWorkPath = System.getProperty("user.dir");
         String projectPath = userWorkPath + File.separator + "easy-generator-demo-projects" + File.separator + "acm-template" + File.separator;
 //        生成的模板文件先保存到temp目录下，如果每一次新增的id相同的话，那么就需要把原先的模板先复制过去，然后生成新的ftl文件
@@ -188,15 +186,71 @@ public class TemplateMaker {
 //
 //    }
 
+//    /**
+//     * 设置成为可以追加新的挖空模板文件
+//     *
+//     * @param args
+//     */
+//    public static void main(String[] args) {
+//        long tempPathId = IdUtil.getSnowflakeNextId();
+//        String inputPath = "src" + File.separator + "xyz" + File.separator + "linyh" + File.separator + "acm" + File.separator + "MainTemplate.java";
+//        genTemplateFiles(1L, "Sum: ", "outputText", inputPath);
+//
+//    }
+
     /**
-     * 设置成为可以追加新的挖空模板文件
+     * 遍历包下面的所有文件，然后将包名都挖空
      *
      * @param args
      */
     public static void main(String[] args) {
-        long tempPathId = IdUtil.getSnowflakeNextId();
-        String inputPath = "src" + File.separator + "xyz" + File.separator + "linyh" + File.separator + "acm" + File.separator + "MainTemplate.java";
-        genTemplateFiles(1L, "Sum: ", "outputText", inputPath,null);
+        String workPath = System.getProperty("user.dir");
+        loopDirAndDig(2L, "xyz.linyh", "packageName", "acm", "artifactName", "shop.linyh", "acm", workPath + File.separator + "easy-generator-demo-projects" + File.separator + "acm-template" + File.separator + "src", workPath);
+    }
+//
 
+
+    /**
+     * 遍历包下面的所有文件，然后将包名都挖空
+     *
+     * @param pathId             temp区的id
+     * @param srcPackageName     原先的组织名
+     * @param srcArtifactName    原先的artifactName
+     * @param distPackageName    新的组织名
+     * @param distArtifactName   新的artifactName
+     * @param resourceParentPath 资源根路径
+     * @param outputParentPath   输出根路径
+     */
+    public static void loopDirAndDig(Long pathId, String srcPackageName, String templatePackageName, String srcArtifactName, String templateArtifactName, String distPackageName, String distArtifactName, String resourceParentPath, String outputParentPath) {
+        String tempOutputRootPath = outputParentPath + File.separator + ".temp" + File.separator + pathId + File.separator + "acm-template";
+        String resourcePath = resourceParentPath + File.separator + srcPackageName.replace(".", File.separator) + File.separator + srcArtifactName;
+
+//        遍历包下的所有文件，然后挖空后移动到目标的对应路径
+        FileUtil.loopFiles(resourcePath).forEach(file -> {
+            String absolutePath = file.getAbsolutePath();
+            if (StrUtil.isBlank(absolutePath) || !absolutePath.startsWith(resourcePath)) {
+                System.out.println("无法复制");
+                return;
+            }
+            String fileBack = absolutePath.replace(resourcePath + File.separator, "");
+            String[] split = fileBack.split("\\\\");
+            String packageName = StrUtil.join(File.separator, Arrays.copyOf(split, split.length - 1));
+            String fileContent = FileUtil.readUtf8String(file);
+//            进行artifact挖空
+            String format = String.format("${%s}", templateArtifactName);
+            String newFileContent = StrUtil.replace(fileContent, srcArtifactName, format);
+
+//            进行组名挖空
+            format = String.format("${%s}", templatePackageName);
+            newFileContent = StrUtil.replace(newFileContent, srcPackageName, format);
+
+
+            String outputFilePath = tempOutputRootPath + File.separator + distPackageName.replace(".", File.separator) + File.separator + distArtifactName + File.separator + packageName;
+            if (!FileUtil.exist(outputFilePath)) {
+                FileUtil.mkdir(outputFilePath);
+            }
+            FileUtil.writeUtf8String(newFileContent, outputFilePath + File.separator + file.getName() + ".ftl");
+
+        });
     }
 }
