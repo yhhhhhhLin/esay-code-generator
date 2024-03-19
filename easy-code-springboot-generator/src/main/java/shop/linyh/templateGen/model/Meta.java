@@ -1,5 +1,7 @@
 package shop.linyh.templateGen.model;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.json.JSONUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +21,15 @@ public class Meta {
     private String createTime;
     private FileConfig fileConfig;
     private ModelsConfig modelConfig;
+
+    /**
+     * 更新meta文件
+     * @param metaPath
+     */
+    public void updateMeta(String metaPath) {
+        FileUtil.writeUtf8String(JSONUtil.toJsonPrettyStr(this),metaPath);
+
+    }
 
     @NoArgsConstructor
     @Data
@@ -66,4 +77,6 @@ public class Meta {
             }
         }
     }
+
+
 }
