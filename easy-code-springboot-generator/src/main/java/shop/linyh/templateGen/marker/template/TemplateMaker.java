@@ -21,7 +21,7 @@ public class TemplateMaker {
 
     private final String PROJECT_PARENT_NAME = "easy-generator-demo-projects";
 
-    private final String GEN_PROJECT_NAME = "acm-template";
+    private final String GEN_PROJECT_NAME = "yhapi-backed";
 
     /**
      * 可以对同一个ftl文件进行多次挖空，还可以追加meta里面的配置信息 todo 添加指定挖到temp的哪个包
@@ -91,9 +91,10 @@ public class TemplateMaker {
     public void loopDirAndDigGroupAndArtifact(Long pathId, String srcPackageName, String templatePackageName, String srcArtifactName, String templateArtifactName, String distPackageName, String distArtifactName, String resourceParentPath, String outputParentPath) {
 
         String tempOutputRootPath = outputParentPath + File.separator + ".temp" + File.separator + pathId + File.separator + GEN_PROJECT_NAME + File.separator + "src" + File.separator + "main";
-        String resourcePath = resourceParentPath + File.separator + srcPackageName.replace(".", File.separator) + File.separator + srcArtifactName;
+//        String resourcePath = resourceParentPath + File.separator + srcPackageName.replace(".", File.separator) + File.separator + srcArtifactName;
+        String resourcePath = resourceParentPath;
 
-        String metaPath = tempOutputRootPath + File.separator + "resource" + File.separator + "meta.json";
+        String metaPath = tempOutputRootPath + File.separator + "resources" + File.separator + "meta.json";
         Meta meta = getMetaJsonStr(metaPath);
         String workPath = System.getProperty("user.dir");
         if (meta == null) {
@@ -111,8 +112,10 @@ public class TemplateMaker {
             String packageName = StrUtil.join(File.separator, Arrays.copyOf(split, split.length - 1));
             String fileContent = FileUtil.readUtf8String(file);
 //            判断如果是.java文件，那么就挖组和artifact
-            String outputBack = distPackageName.replace(".", File.separator) + File.separator + distArtifactName + File.separator + packageName;
-            String outputFilePath = tempOutputRootPath + File.separator + "java" + File.separator + outputBack;
+//            String outputBack = distPackageName.replace(".", File.separator) + File.separator + distArtifactName + File.separator + packageName;
+            String outputBack = packageName;
+            String outputFilePath = tempOutputRootPath + File.separator + outputBack;
+//           TODO  除了java文件，mapper文件等也要挖空
             if (file.getName().endsWith(".java")) {
 //            进行artifact挖空
                 String format = String.format("${%s}", templateArtifactName);
@@ -131,7 +134,7 @@ public class TemplateMaker {
                 meta = addMetaFiles(addFile, meta);
             } else {
 //                添加静态的文件
-                FileUtil.writeUtf8String(fileContent, outputFilePath + file.getName());
+                FileUtil.writeUtf8String(fileContent, outputFilePath +File.separator+ file.getName());
                 Meta.FileConfig.Files addFile = new Meta.FileConfig.Files(outputBack + file.getName(), outputBack + file.getName() + ".ftl", FileTypeEnum.FILE.getValue(), "static", null, null);
                 addMetaFiles(addFile, meta);
             }
