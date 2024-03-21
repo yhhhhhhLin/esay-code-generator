@@ -16,6 +16,7 @@ public class Meta {
     private String name;
     private String description;
     private String basePackage;
+    private String baseArtifact;
     private String version;
     private String author;
     private String createTime;

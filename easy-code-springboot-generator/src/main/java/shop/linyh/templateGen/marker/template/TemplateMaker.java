@@ -83,24 +83,25 @@ public class TemplateMaker {
      * @param pathId             temp区的id
      * @param srcPackageName     原先的组织名
      * @param srcArtifactName    原先的artifactName
-     * @param distPackageName    新的组织名
-     * @param distArtifactName   新的artifactName
      * @param resourceParentPath 资源根路径
      * @param outputParentPath   输出根路径
      */
-    public void loopDirAndDigGroupAndArtifact(Long pathId, String srcPackageName, String templatePackageName, String srcArtifactName, String templateArtifactName, String distPackageName, String distArtifactName, String resourceParentPath, String outputParentPath) {
+    public void loopDirAndDigGroupAndArtifact(Long pathId, String srcPackageName, String templatePackageName, String srcArtifactName, String templateArtifactName, String resourceParentPath, String outputParentPath) {
 
-        String tempOutputRootPath = outputParentPath + File.separator + ".temp" + File.separator + pathId + File.separator + GEN_PROJECT_NAME + File.separator + "src" + File.separator + "main";
+        String tempOutputRootPath = outputParentPath + File.separator + ".temp" + File.separator + pathId + File.separator + GEN_PROJECT_NAME;
 //        String resourcePath = resourceParentPath + File.separator + srcPackageName.replace(".", File.separator) + File.separator + srcArtifactName;
         String resourcePath = resourceParentPath;
 
-        String metaPath = tempOutputRootPath + File.separator + "resources" + File.separator + "meta.json";
+        String metaPath = tempOutputRootPath + File.separator +"src"+File.separator+"main"+File.separator+ "resources" + File.separator + "meta.json";
         Meta meta = getMetaJsonStr(metaPath);
         String workPath = System.getProperty("user.dir");
         if (meta == null) {
-            meta = initMetaJson(metaPath, "springboot模板", "springboot模板", distPackageName, "1.0", "linyh", tempOutputRootPath, workPath + File.separator + "generated");
+            meta = initMetaJson(metaPath, "springboot模板", "springboot模板", srcPackageName, "1.0", "linyh", tempOutputRootPath, workPath + File.separator + "#{projectName}");
+            Meta.ModelsConfig.Models projectModel = new Meta.ModelsConfig.Models("projectName", "String", "项目名", "template", "pn", null, null);
+            addMetaModel(projectModel, meta);
         }
 //        遍历包下的所有文件，然后挖空后移动到目标的对应路径
+        boolean isFirstGroupAndArtifact = true;
         for (File file : FileUtil.loopFiles(resourcePath)) {
             String absolutePath = file.getAbsolutePath();
             if (StrUtil.isBlank(absolutePath) || !absolutePath.startsWith(resourcePath)) {
@@ -112,14 +113,27 @@ public class TemplateMaker {
             String packageName = StrUtil.join(File.separator, Arrays.copyOf(split, split.length - 1));
             String fileContent = FileUtil.readUtf8String(file);
 //            判断如果是.java文件，那么就挖组和artifact
-//            String outputBack = distPackageName.replace(".", File.separator) + File.separator + distArtifactName + File.separator + packageName;
-            String outputBack = packageName;
-            String outputFilePath = tempOutputRootPath + File.separator + outputBack;
+//            String resourceOutputBack = distPackageName.replace(".", File.separator) + File.separator + distArtifactName + File.separator + packageName;
+            String resourceOutputBack = packageName;
+            String packageFormat = String.format("#{%s}", "basePackage");
+            String artifactFormat = String.format("#{%s}", "baseArtifact");
+            String outputBack = StrUtil.replace(StrUtil.replace(resourceOutputBack, srcPackageName.replace(".",File.separator), packageFormat),srcArtifactName.replace(".",File.separator), artifactFormat);
+            String outputFilePath = tempOutputRootPath + File.separator + resourceOutputBack;
 //           TODO  除了java文件，mapper文件等也要挖空
-            if (file.getName().endsWith(".java")) {
+            if (file.getName().endsWith(".java") || file.getName().endsWith(".xml")) {
 //            进行artifact挖空
                 String format = String.format("${%s}", templateArtifactName);
                 String newFileContent = StrUtil.replace(fileContent, srcArtifactName, format);
+
+//                判断是否是第一次挖空，如果是第一次挖空，那么需要在model下面添加对应的model参数
+                if(isFirstGroupAndArtifact){
+//                    添加model
+                    Meta.ModelsConfig.Models addGroupModel = new Meta.ModelsConfig.Models(templatePackageName, "String", "项目包名","shop.linyh","gn",null,null);
+                    Meta.ModelsConfig.Models addArtifact = new Meta.ModelsConfig.Models(templateArtifactName, "String", "项目artifact名", "template", "an", null, null);
+                    addMetaModel(addGroupModel, meta);
+                    addMetaModel(addArtifact, meta);
+                    isFirstGroupAndArtifact = false;
+                }
 
 //            进行组名挖空
                 format = String.format("${%s}", templatePackageName);
@@ -129,16 +143,18 @@ public class TemplateMaker {
                     FileUtil.mkdir(outputFilePath);
                 }
                 FileUtil.writeUtf8String(newFileContent, outputFilePath + File.separator + file.getName() + ".ftl");
-                Meta.FileConfig.Files addFile = new Meta.FileConfig.Files(outputBack + file.getName(), outputBack + file.getName() + ".ftl", FileTypeEnum.FILE.getValue(), "dynamic", null, null);
+                Meta.FileConfig.Files addFile = new Meta.FileConfig.Files( resourceOutputBack +File.separator+ file.getName() + ".ftl", outputBack +File.separator + file.getName(), FileTypeEnum.FILE.getValue(), "dynamic", null, null);
 //                添加动态的文件
                 meta = addMetaFiles(addFile, meta);
             } else {
 //                添加静态的文件
                 FileUtil.writeUtf8String(fileContent, outputFilePath +File.separator+ file.getName());
-                Meta.FileConfig.Files addFile = new Meta.FileConfig.Files(outputBack + file.getName(), outputBack + file.getName() + ".ftl", FileTypeEnum.FILE.getValue(), "static", null, null);
+                Meta.FileConfig.Files addFile = new Meta.FileConfig.Files( resourceOutputBack +File.separator+ file.getName(),outputBack +File.separator+ file.getName(), FileTypeEnum.FILE.getValue(), "static", null, null);
+//                将\\换位/
                 addMetaFiles(addFile, meta);
             }
         }
+        meta = JSONUtil.toBean(JSONUtil.toJsonStr(meta).replace("\\\\", "/"),Meta.class);
         meta.updateMeta(metaPath);
     }
 
@@ -160,6 +176,7 @@ public class TemplateMaker {
         meta.setName(projectName);
         meta.setDescription(projectDesc);
         meta.setBasePackage(basePackage);
+        meta.setBaseArtifact("artifactName");
         meta.setVersion(version);
         meta.setAuthor(author);
         meta.setCreateTime(new Date().toString());
@@ -219,6 +236,20 @@ public class TemplateMaker {
     }
 
     /**
+     * 添加model 有去重操作
+     * @param model
+     * @param meta
+     * @return
+     */
+    private Meta addMetaModel(Meta.ModelsConfig.Models model, Meta meta) {
+        List<Meta.ModelsConfig.Models> models = meta.getModelConfig().getModels();
+        models.add(model);
+        List<Meta.ModelsConfig.Models> newModels = distinctModels(models);
+        meta.getModelConfig().setModels(newModels);
+        return meta;
+    }
+
+    /**
      * 初始化meta.json 里面内容
      *
      * @param inputPath
@@ -240,6 +271,21 @@ public class TemplateMaker {
 
         String workPath = System.getProperty("user.dir");
 //        templateMaker.loopDirAndDigGroupAndArtifact(2L, "xyz.linyh", "packageName", "acm", "artifactName", "shop.linyh", "acm", workPath + File.separator + "easy-generator-demo-projects" + File.separator + "acm-template" + File.separator + "src", workPath);
+
+    }
+
+    /**
+     * 在创建的ftl文件夹中新增dataModal的ftl文件
+     * @param tempId
+     */
+    public void addDataModalFtl(Long tempId,String resourcePath,String outputParentPath) {
+        String dataModalOutputPath = outputParentPath + File.separator+".temp"+File.separator+tempId+File.separator+GEN_PROJECT_NAME+File.separator+"ftl";
+//        判断是否存在，不存在就创建
+        if(!FileUtil.exist(dataModalOutputPath)){
+            FileUtil.mkdir(dataModalOutputPath);
+        }
+        FileUtil.copy(resourcePath + File.separator+"DataModel.java.ftl", dataModalOutputPath+File.separator+"DataModel.java.ftl",true);
+
 
     }
 }
