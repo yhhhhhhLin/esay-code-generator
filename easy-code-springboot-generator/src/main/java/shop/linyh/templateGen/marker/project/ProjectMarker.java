@@ -7,6 +7,7 @@ import shop.linyh.templateGen.model.Meta;
 import shop.linyh.templateGen.model.ftl.DataModel;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public class ProjectMarker {
 
     public void genProject(Meta meta, DataModel dataModel) throws Exception {
         String resourcePath = meta.getFileConfig().getInputRootPath();
-        String fileOutputRootPath = StrUtil.replace(meta.getFileConfig().getOutputRootPath(),"#{projectName}",String.format("%s", dataModel.getProjectName()));
+        String fileOutputRootPath = StrUtil.replace(meta.getFileConfig().getOutputRootPath(), "#{projectName}", String.format("%s", dataModel.getProjectName()));
 //        将meta所有文件生成出来
         List<Meta.FileConfig.Files> files = meta.getFileConfig().getFiles();
         System.out.println(files);
@@ -28,13 +29,29 @@ public class ProjectMarker {
             String outPathBack = StrUtil.replace(StrUtil.replace(file.getOutputPath(), "#{basePackage}", groupFormat), "#{baseArtifact}", artifactFormat);
             String fileInputPath = resourcePath + File.separator + file.getInputPath();
             String fileOutputPath = fileOutputRootPath + File.separator + outPathBack;
-            if(file.getGenerateType().equals("dynamic")){
+//                通过反射获取dataModel中的对应属性，判断是否需要生成
+            String fileCondition = file.getCondition();
+            boolean needFile = false;
+            if(StrUtil.isBlank(fileCondition)){
+                needFile = true;
+            }else{
+                Field field = dataModel.getClass().getDeclaredField(fileCondition);
+                field.setAccessible(true);
+                needFile= (boolean) field.get(dataModel);
+            }
+            if (file.getGenerateType().equals("dynamic")) {
 //                使用动态生成
-                DynamicFileGenerator.doGenerate(fileInputPath,fileOutputPath,dataModel);
-            }else if(file.getGenerateType().equals("static")){
+//                判断文件是否需要被生成
+                if (needFile) {
+                    DynamicFileGenerator.doGenerate(fileInputPath, fileOutputPath, dataModel);
+                }
+            } else if (file.getGenerateType().equals("static")) {
 //                使用静态生成
-                StaticFileGenerator.doGenerate(fileInputPath,fileOutputPath);
+                if (needFile) {
+                    StaticFileGenerator.doGenerate(fileInputPath, fileOutputPath);
+                }
             }
         }
     }
+
 }
