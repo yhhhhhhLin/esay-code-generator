@@ -1,4 +1,4 @@
-package shop.linyh.templateGen.model;
+package shop.linyh.fileGen.model;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.json.JSONUtil;
@@ -51,6 +51,7 @@ public class Meta {
 //        可以判断condition，然后在model里面找到对应的model，然后判断是否生成
             private String condition;
             private List<Files> files;
+
         }
     }
 

@@ -1,10 +1,11 @@
-package shop.linyh.templateGen.meta;
+package shop.linyh.fileGen.meta;
 
 import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.json.JSONUtil;
-import shop.linyh.templateGen.model.Meta;
+import shop.linyh.fileGen.model.Meta;
 
 import java.io.File;
+import java.lang.invoke.VarHandle;
 
 public class MetaManager {
 
@@ -41,7 +42,7 @@ public class MetaManager {
      */
     public static Meta initMeta(String metaPath) {
 //        获取模板文件里面的json配置数据
-        String metaJson = ResourceUtil.readUtf8Str(metaPath+ File.separator + "meta.json");
+        String metaJson = ResourceUtil.readUtf8Str(metaPath);
         Meta meta = JSONUtil.toBean(metaJson, Meta.class);
 //        TODO 可能还有一些其他处理（默认值）
         return meta;

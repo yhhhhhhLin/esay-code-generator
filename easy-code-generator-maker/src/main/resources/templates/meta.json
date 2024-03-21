@@ -38,6 +38,7 @@
   },
   "modelConfig": {
     "models": [
+      {},
       {
         "fieldName": "loop",
         "type": "boolean",

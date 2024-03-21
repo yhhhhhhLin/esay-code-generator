@@ -11,11 +11,9 @@ public class DataModel {
 
 <#list modelConfig.models as modelInfo>
 
-    <#if modelInfo.models??>
-        /**
-        * ${modelInfo.description}
-        */
-    </#if>
+    /**
+    * ${modelInfo.description}
+    */
     public ${modelInfo.type} ${modelInfo.fieldName} <#if modelInfo.defaultValue??> = <#if modelInfo.type=='boolean'>${modelInfo.defaultValue?c} <#else>"${modelInfo.defaultValue}"</#if></#if>;
 
 
