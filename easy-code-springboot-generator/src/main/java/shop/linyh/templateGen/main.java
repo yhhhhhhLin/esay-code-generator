@@ -1,5 +1,10 @@
 package shop.linyh.templateGen;
 
+import com.aliyun.oss.common.auth.CredentialsProvider;
+import com.aliyun.oss.common.auth.CredentialsProviderFactory;
+import com.aliyun.oss.common.auth.DefaultCredentialProvider;
+import com.aliyun.oss.common.auth.STSAssumeRoleSessionCredentialsProvider;
+import com.aliyuncs.exceptions.ClientException;
 import shop.linyh.templateGen.marker.entity.EntityMaker;
 import shop.linyh.templateGen.marker.project.ProjectMarker;
 import shop.linyh.templateGen.marker.template.TemplateMaker;
@@ -33,28 +38,32 @@ public class main {
 //
 //    }
 
-    public static void main(String[] args) throws Exception {
-        String metaPath = workDir + File.separator +".temp"+File.separator + tempId + File.separator + projectName + File.separator + "src" + File.separator + "main" + File.separator + "resources";
-        Meta meta = MetaManager.getMeta(metaPath);
-        ProjectMarker projectMarker = new ProjectMarker();
-        DataModel dataModel = new DataModel();
-        dataModel.setGroupName("shop.linyh");
-        dataModel.setArtifactName("backed");
-        dataModel.setNeedCors(false);
-        dataModel.setNeedBootWeb(false);
-        dataModel.setNeedBootAop(false);
-        dataModel.setNeedMybatisPlus(false);
-        dataModel.setNeedMybatis(false);
-        dataModel.setNeedMysql(false);
-        dataModel.setNeedRedis(false);
-        dataModel.setNeedGson(false);
-        dataModel.setNeedFastJson(false);
-        dataModel.setNeedHutool(false);
-        dataModel.setNeedKnife4j(false);
-        dataModel.setNeedLombok(false);
-        dataModel.setProjectName("backed");
+//    public static void main(String[] args) throws Exception {
+//        String metaPath = workDir + File.separator +".temp"+File.separator + tempId + File.separator + projectName + File.separator + "src" + File.separator + "main" + File.separator + "resources";
+//        Meta meta = MetaManager.getMeta(metaPath);
+//        ProjectMarker projectMarker = new ProjectMarker();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setGroupName("shop.linyh");
+//        dataModel.setArtifactName("backed");
+//        dataModel.setNeedCors(false);
+//        dataModel.setNeedBootWeb(false);
+//        dataModel.setNeedBootAop(false);
+//        dataModel.setNeedMybatisPlus(false);
+//        dataModel.setNeedMybatis(false);
+//        dataModel.setNeedMysql(false);
+//        dataModel.setNeedRedis(false);
+//        dataModel.setNeedGson(false);
+//        dataModel.setNeedFastJson(false);
+//        dataModel.setNeedHutool(false);
+//        dataModel.setNeedKnife4j(false);
+//        dataModel.setNeedLombok(false);
+//        dataModel.setProjectName("backed");
+//
+//        projectMarker.genProject(meta,dataModel);
+//    }
 
-        projectMarker.genProject(meta,dataModel);
+    public static void main(String[] args) throws ClientException {
+        String region = "cn-guangzhou";
+
     }
-
 }
