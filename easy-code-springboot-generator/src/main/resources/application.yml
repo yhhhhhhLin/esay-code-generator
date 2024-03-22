@@ -1,3 +1,7 @@
 aliyun:
   oss:
     file:
+      endpoint: oss-cn-guangzhou.aliyuncs.com
+      keyid:
+      keysecret:
+      bucketname:

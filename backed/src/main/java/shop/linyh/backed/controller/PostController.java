@@ -13,9 +13,7 @@ import shop.linyh.backed.model.dto.post.PostAddRequest;
 import shop.linyh.backed.model.dto.post.PostQueryRequest;
 import shop.linyh.backed.model.dto.post.PostUpdateRequest;
 import shop.linyh.backed.model.entity.Post;
-import shop.linyh.backed.model.entity.User;
 import shop.linyh.backed.service.PostService;
-import shop.linyh.backed.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -38,8 +36,6 @@ public class PostController {
     @Resource
     private PostService postService;
 
-    @Resource
-    private UserService userService;
 
     // region 增删改查
 
@@ -59,8 +55,8 @@ public class PostController {
         BeanUtils.copyProperties(postAddRequest, post);
         // 校验
         postService.validPost(post, true);
-        User loginUser = userService.getLoginUser(request);
-        post.setUserId(loginUser.getId());
+        // todo 这里需要获取id
+        post.setUserId(0L);
         boolean result = postService.save(post);
         if (!result) {
             throw new BusinessException(ErrorCode.OPERATION_ERROR);
@@ -81,17 +77,18 @@ public class PostController {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User user = userService.getLoginUser(request);
+            // 需要获取用户id
+            // User user = 0L;
         long id = deleteRequest.getId();
         // 判断是否存在
         Post oldPost = postService.getById(id);
         if (oldPost == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
-        // 仅本人或管理员可删除
-        if (!oldPost.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
-            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
-        }
+        // TODO 需要判断本人或管理员才可以删除
+        // if (!oldPost.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
+        //    throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+        // }
         boolean b = postService.removeById(id);
         return ResultUtils.success(b);
     }
@@ -113,17 +110,18 @@ public class PostController {
         BeanUtils.copyProperties(postUpdateRequest, post);
         // 参数校验
         postService.validPost(post, false);
-        User user = userService.getLoginUser(request);
+        // 需要获取用户id
+        // User user = 0L;
         long id = postUpdateRequest.getId();
         // 判断是否存在
         Post oldPost = postService.getById(id);
         if (oldPost == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
-        // 仅本人或管理员可修改
-        if (!oldPost.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
-            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
-        }
+        // TODO 需要判断本人或管理员才可以删除
+        // if (!oldPost.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
+        //    throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+        // }
         boolean result = postService.updateById(post);
         return ResultUtils.success(result);
     }
@@ -149,7 +147,6 @@ public class PostController {
      * @param postQueryRequest
      * @return
      */
-    @AuthCheck(mustRole = "admin")
     @GetMapping("/list")
     public BaseResponse<List<Post>> listPost(PostQueryRequest postQueryRequest) {
         Post postQuery = new Post();

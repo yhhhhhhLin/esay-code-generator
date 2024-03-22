@@ -11,6 +11,20 @@ public class DataModel {
 
 
     /**
+    * 是否需要post实例代码(创建post的数据库表)
+    */
+    public boolean needPostExample  = true ;
+
+
+
+    /**
+    * 是否需要user实例和一些权限校验代码(创建User的数据库表)
+    */
+    public boolean needUserExample  = true ;
+
+
+
+    /**
     * 项目包名
     */
     public String groupName  = "shop.linyh";

@@ -7,5 +7,7 @@ import java.io.InputStream;
 public interface OssService {
     public String uploadImage(MultipartFile file);
 
-    public String uploadImage2(InputStream inputStream);
+    public String getImage(String filePath);
+
+    public String delImage(String filePath);
 }

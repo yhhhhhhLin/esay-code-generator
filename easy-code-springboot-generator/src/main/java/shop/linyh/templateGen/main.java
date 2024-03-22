@@ -16,27 +16,27 @@ import java.io.File;
 
 public class main {
 
-    static Long tempId = 6L;
+    static Long tempId = 7L;
     static String projectName = "yhapi-backed";
     static TemplateMaker templateMaker = new TemplateMaker();
     static String workDir = System.getProperty("user.dir");
 
-//    public static void main(String[] args) throws Exception {
-//        Long tempId = 6L;
-//        String projectName = "yhapi-backed";
-//        TemplateMaker templateMaker = new TemplateMaker();
-//        String workDir = System.getProperty("user.dir");
-//        String dataModelFtlPath = workDir + File.separator +"easy-code-springboot-generator"+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"templates"+File.separator+"java"+File.separator+"model";
-//        String resourcePath = workDir+File.separator+"easy-generator-demo-projects"+ File.separator +projectName;
-////        templateMaker.loopDirAndDigGroupAndArtifact(tempId, "xyz.linyh","groupName","yhapi","artifactName",resourcePath,workDir);
-////        templateMaker.addDataModalFtl(tempId,dataModelFtlPath,workDir);
-//
-////        将meta.json下面的所有实体类创建一个实体对象
+    public static void main(String[] args) throws Exception {
+        Long tempId = 7L;
+        String projectName = "yhapi-backed";
+        TemplateMaker templateMaker = new TemplateMaker();
+        String workDir = System.getProperty("user.dir");
+        String dataModelFtlPath = workDir + File.separator +"easy-code-springboot-generator"+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"templates"+File.separator+"java"+File.separator+"model";
+        String resourcePath = workDir+File.separator+"easy-generator-demo-projects"+ File.separator +projectName;
+        templateMaker.loopDirAndDigGroupAndArtifact(tempId, "xyz.linyh","groupName","yhapi","artifactName",resourcePath,workDir);
+        templateMaker.addDataModalFtl(tempId,dataModelFtlPath,workDir);
+
+//        将meta.json下面的所有实体类创建一个实体对象
 //        EntityMaker entityMaker = new EntityMaker();
 //        String tempPath = workDir+ File.separator+".temp"+File.separator+tempId +File.separator+projectName;
 //        entityMaker.doGenerate(tempPath,workDir+File.separator+"easy-code-springboot-generator"+File.separator+"src"+File.separator+"main"+File.separator+"java"+File.separator +"shop"+File.separator +"linyh" +File.separator +"templateGen"+File.separator+"model" + File.separator +"ftl");
-//
-//    }
+
+    }
 
 //    public static void main(String[] args) throws Exception {
 //        String metaPath = workDir + File.separator +".temp"+File.separator + tempId + File.separator + projectName + File.separator + "src" + File.separator + "main" + File.separator + "resources";
@@ -58,12 +58,10 @@ public class main {
 //        dataModel.setNeedKnife4j(false);
 //        dataModel.setNeedLombok(false);
 //        dataModel.setProjectName("backed");
+//        dataModel.setNeedUserExample(false);
 //
 //        projectMarker.genProject(meta,dataModel);
 //    }
 
-    public static void main(String[] args) throws ClientException {
-        String region = "cn-guangzhou";
 
-    }
 }

@@ -8,6 +8,7 @@ import shop.linyh.templateGen.service.OssService;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.util.zip.ZipOutputStream;
 
 @RestController
 public class OssController {
@@ -18,6 +19,15 @@ public class OssController {
     @GetMapping("/upload")
     public void uploadToOss(){
         BufferedInputStream inputStream = FileUtil.getInputStream("D:\\图片\\4e3550b419ee468309704070924447e0_t.gif");
-        ossService.uploadImage2(inputStream);
+    }
+
+    @GetMapping("/download")
+    public String downLoadFromOss(String fileName){
+        return ossService.getImage(fileName);
+    }
+
+    @GetMapping
+    public String zip(){
+        return null;
     }
 }

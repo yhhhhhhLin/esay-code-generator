@@ -120,7 +120,7 @@ public class TemplateMaker {
             String outputBack = StrUtil.replace(StrUtil.replace(resourceOutputBack, srcPackageName.replace(".",File.separator), packageFormat),srcArtifactName.replace(".",File.separator), artifactFormat);
             String outputFilePath = tempOutputRootPath + File.separator + resourceOutputBack;
 //           TODO  除了java文件，mapper文件等也要挖空
-            if (file.getName().endsWith(".java") || file.getName().endsWith(".xml")) {
+            if (file.getName().endsWith(".java") || file.getName().endsWith(".xml") || file.getName().endsWith(".yml")) {
 //            进行artifact挖空
                 String format = String.format("${%s}", templateArtifactName);
                 String newFileContent = StrUtil.replace(fileContent, srcArtifactName, format);
